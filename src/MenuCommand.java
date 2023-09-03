@@ -21,8 +21,8 @@ public enum MenuCommand {
 
   public static void menu() {
     System.out.println();
-    System.out.println("            [ ИГРА ]");
-    System.out.println("======= КРЕСТИКИ / НОЛИКИ =======");
+    System.out.println(" ═-═-═-═-═-═ Добро пожаловать в Игру Крестики Нолики ═-═-═-═-═-═ ");
+    System.out.println(" ===================  〚 МЕНЮ 〛 ===================\n");
 
     for (MenuCommand command : values()) {
       if (command != UNEXPECTED) {
@@ -45,7 +45,9 @@ public enum MenuCommand {
 
         switch (command) {
           case 1:
-            File gofile = new File("res/go.txt");
+            System.out.println("Вы выбрали: " + READ.string);
+            System.out.println("------------------------------------------------------");
+            File gofile = new File("res/Conditions.txt");
             Scanner scannerFile = new Scanner(gofile);
 
             while (scannerFile.hasNextLine()) {
@@ -57,14 +59,16 @@ public enum MenuCommand {
             break;
 
           case 2:
-            System.out.println("                     Добро пожаловать в игру жилаем вам удачной и запоминающееся партии!");
-            System.out.println("Но должны предупредить! Прежде чем вы начнёте игру с вашим соперником определитесь кто какими камнями будет играть");
+            System.out.println("Вы выбрали: " + START.string);
+            System.out.println("------------------------------------------------------");
             GameXO.main();
             selectedCommand = START;
             return selectedCommand;
 
           case 3:
-            System.out.println("Вы выбрали выйти из игры до скорой встречи.");
+            System.out.println("Вы выбрали: " + EXIT.string);
+            System.out.println("------------------------------------------------------");
+            System.out.println("До скорой встречи");
             selectedCommand = EXIT;
             isRun = false;
             break;
