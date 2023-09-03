@@ -8,11 +8,11 @@ public class GameXO {
   private static byte PlayerNumber = 0;
 
   public static void main() {
-    int iTmp = 0;
+    int number = 0;
     Scanner scanner = new Scanner(System.in);
 
     for (int i = 0; i < FieldSizeInLengthAndWidth * FieldSizeInLengthAndWidth; i++) {
-      field[i] = Integer.toString(++iTmp);
+      field[i] = Integer.toString(++number);
     }
 
     while (!isGameEnd()) {
@@ -23,16 +23,19 @@ public class GameXO {
         System.out.print("Наберите число, куда вы хотите вставить " + (1 == PlayerNumber ? "крестик" : "нолик") + ": ");
 
         if (scanner.hasNextInt()) {
-          iTmp = scanner.nextInt() - 1;
-          if (isValidInput(iTmp)) {
+          number = scanner.nextInt() - 1;
+          if (isValidInput(number)) {
             break;
           }
+
+        }else {
+          scanner.next();
         }
-        System.out.println("Введенное число уже было использовано. Введите новое число!");
+        System.out.println("Неверное число. Введите новое число!");
       }
       try {
-        putX(iTmp);
-      } catch (Exception e) {
+        putX(number);
+      }catch (Exception e) {
         System.out.println("Что-то пошло не так ;(");
       }
     }
@@ -43,10 +46,9 @@ public class GameXO {
    * этом месте еще не заполнено
    */
   private static boolean isValidInput(int iIn) {
-    if (iIn >= FieldSizeInLengthAndWidth * FieldSizeInLengthAndWidth)
+    if (iIn >= FieldSizeInLengthAndWidth * FieldSizeInLengthAndWidth|| iIn < 0)
       return false;
-    if (iIn < 0)
-      return false;
+
     switch (getX(iIn)) {
       case 'O':
       case 'X':
