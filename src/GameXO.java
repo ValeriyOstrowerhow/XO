@@ -1,43 +1,40 @@
 import java.util.Scanner;
 public class GameXO {
 
-  private static final byte fieldSize = 3;
+  private static final byte FieldSizeInLengthAndWidth = 3;
 
-  private static String[] field = new String[fieldSize * fieldSize];
+  private static String[] field = new String[FieldSizeInLengthAndWidth * FieldSizeInLengthAndWidth];
 
-  private static byte bPlayerNum = 0;
+  private static byte PlayerNumber = 0;
 
-  public static void main(String[] args) {
+  public static void main() {
     int iTmp = 0;
     Scanner scanner = new Scanner(System.in);
-    System.out.println("            [ ИГРА ]");
-    System.out.println("======= КРЕСТИКИ / НОЛИКИ =======");
 
-    for (int i = 0; i < fieldSize * fieldSize; i++)
+    for (int i = 0; i < FieldSizeInLengthAndWidth * FieldSizeInLengthAndWidth; i++) {
       field[i] = Integer.toString(++iTmp);
+    }
 
     while (!isGameEnd()) {
       nextPlayer();
       while (true) {
-        System.out.println("\nХод игрока " + bPlayerNum);
+        System.out.println("\nХод игрока " + PlayerNumber);
         showPole();
-        System.out.print(
-            "Наберите число, куда вы хотите вставить " + (1 == bPlayerNum ? "крестик" : "нолик")
-                + ": ");
+        System.out.print("Наберите число, куда вы хотите вставить " + (1 == PlayerNumber ? "крестик" : "нолик") + ": ");
+
         if (scanner.hasNextInt()) {
           iTmp = scanner.nextInt() - 1;
-          if (isValidInput(iTmp))
+          if (isValidInput(iTmp)) {
             break;
+          }
         }
-        System.out.println("Введенное число уже было использовано. Введите новое число");
-        scanner.next();
+        System.out.println("Введенное число уже было использовано. Введите новое число!");
       }
       try {
         putX(iTmp);
       } catch (Exception e) {
         System.out.println("Что-то пошло не так ;(");
       }
-      showPole();
     }
   }
 
@@ -46,7 +43,7 @@ public class GameXO {
    * этом месте еще не заполнено
    */
   private static boolean isValidInput(int iIn) {
-    if (iIn >= fieldSize * fieldSize)
+    if (iIn >= FieldSizeInLengthAndWidth * FieldSizeInLengthAndWidth)
       return false;
     if (iIn < 0)
       return false;
@@ -62,7 +59,7 @@ public class GameXO {
    * Функция задает номер следующего игрока
    */
   private static void nextPlayer() {
-    bPlayerNum = (byte) (1 == bPlayerNum ? 2 : 1);
+    PlayerNumber = (byte) (1 == PlayerNumber ? 2 : 1);
   }
 
   /**
@@ -73,32 +70,33 @@ public class GameXO {
     int i, j;
     boolean bRowWin = false, bColWin = false;
 
-    for (i = 0; i < fieldSize; i++) {
+    for (i = 0; i < FieldSizeInLengthAndWidth; i++) {
       bRowWin = true;
       bColWin = true;
-      for (j = 0; j < fieldSize - 1; j++) {
+      for (j = 0; j < FieldSizeInLengthAndWidth - 1; j++) {
         bRowWin &= (getXY(i, j).charAt(0) == getXY(i, j + 1).charAt(0));
         bColWin &= (getXY(j, i).charAt(0) == getXY(j + 1, i).charAt(0));
       }
       if (bColWin || bRowWin) {
-        System.out.println("Игра окончена. Победил игрок " + bPlayerNum);
+        System.out.println("Игра окончена. Победил игрок " + PlayerNumber);
         return true;
       }
     }
 
     bRowWin = true;
     bColWin = true;
-    for (i = 0; i < fieldSize - 1; i++) {
+    for (i = 0; i < FieldSizeInLengthAndWidth - 1; i++) {
       bRowWin &= (getXY(i, i).charAt(0) == getXY(i + 1, i + 1).charAt(0));
-      bColWin &= (getXY(i, fieldSize - i - 1).charAt(0) == getXY(i + 1, fieldSize - i - 2).charAt(
+      bColWin &= (getXY(i, FieldSizeInLengthAndWidth - i - 1).charAt(0) == getXY(i + 1, FieldSizeInLengthAndWidth
+          - i - 2).charAt(
           0));
     }
     if (bColWin || bRowWin) {
-      System.out.println("Игра окончена. Победил игрок " + bPlayerNum);
+      System.out.println("Игра окончена. Победил игрок " + PlayerNumber);
       return true;
     }
 
-    for (i = 0; i < fieldSize * fieldSize; i++) {
+    for (i = 0; i < FieldSizeInLengthAndWidth * FieldSizeInLengthAndWidth; i++) {
       switch (getX(i)) {
         case 'O':
         case 'X':
@@ -107,11 +105,10 @@ public class GameXO {
           return false;
       }
     }
-    if (fieldSize * fieldSize <= i) {
+    if (FieldSizeInLengthAndWidth * FieldSizeInLengthAndWidth <= i) {
       System.out.println("Игра окончена,все ходы испольхованы. Ничья");
       return true;
     }
-
     return false;
   }
 
@@ -119,7 +116,7 @@ public class GameXO {
    * Получает значение координаты на поле
    */
   private static String getXY(int x, int y) {
-    return field[x * fieldSize + y];
+    return field[x * FieldSizeInLengthAndWidth + y];
   }
 
   /**
@@ -130,21 +127,23 @@ public class GameXO {
   }
 
   /**
-   * Вставляет на поле крестик или нолик
+   * Вставляет в элементы поля крестик или нолик
    */
   private static void putX(int x) {
-    field[x] = 1 == bPlayerNum ? "X" : "O";
+    field[x] = (1 == PlayerNumber ? "X" : "O");
   }
 
   /**
    * Вывести игровое поле
    */
   private static void showPole() {
-    for (int i = 0; i < fieldSize; i++) {
-      for (int j = 0; j < fieldSize; j++) {
-        System.out.printf("%4s", getXY(i, j));
+
+    for (int i = 0; i < FieldSizeInLengthAndWidth; i++) {
+      System.out.print(" ");
+      for (int j = 0; j < FieldSizeInLengthAndWidth; j++) {
+        System.out.print(getXY(i, j) + "   ");
       }
-      System.out.print("\n");
+      System.out.println();
     }
   }
 }
