@@ -5,7 +5,7 @@ import java.util.Scanner;
 public enum MenuCommand {
 
   READ(1, "Правила и история игры"),
-  START (2, "Старт игры"),
+  START(2, "Старт игры"),
   EXIT(3, "Выйти из игры"),
   UNEXPECTED(0, "");
 
@@ -41,7 +41,8 @@ public enum MenuCommand {
       System.out.print("Введите номер пункта меню: ");
       if (scanner.hasNextInt()) {
         int command = scanner.nextInt();
-        System.out.println("------------------------------------------------------------------------------------------------------------------");
+        System.out.println(
+            "------------------------------------------------------------------------------------------------------------------");
 
         switch (command) {
           case 1:
