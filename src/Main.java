@@ -1,9 +1,9 @@
 import java.io.FileNotFoundException;
-import java.text.ParseException;
 
 public class Main {
 
-  public static void main(String[] args) throws ParseException, FileNotFoundException {
+  public static void main(String[] args) throws FileNotFoundException {
+
     MenuCommand.commandList();
 
   }
