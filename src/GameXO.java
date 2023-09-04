@@ -1,27 +1,47 @@
 import java.util.Scanner;
+
+/**
+ * Класс представляющий игру Крестики-Нолики
+ */
 public class GameXO {
 
+  /**
+   * Константа размера игрового поля
+   */
   private static final byte FieldSizeInLengthAndWidth = 3;
-
+  /**
+   * Игровое поле
+   */
   private static String[] field = new String[FieldSizeInLengthAndWidth * FieldSizeInLengthAndWidth];
-
+  /**
+   * Номер текущего игрока
+   */
   private static byte PlayerNumber = 0;
 
+  /**
+   * Основной метод, запускающий игру
+   */
   public static void main() {
     int number = 0;
     Scanner scanner = new Scanner(System.in);
-
+/**
+ * Инициализация поля
+ */
     for (int i = 0; i < FieldSizeInLengthAndWidth * FieldSizeInLengthAndWidth; i++) {
       field[i] = Integer.toString(++number);
     }
-
+/**
+ * Главный игровой цикл
+ */
     while (!isGameEnd()) {
       nextPlayer();
       while (true) {
-        System.out.println("\nХод игрока " + PlayerNumber);
+        System.out.println("\nХод игрока " + PlayerNumber);//Отображение хода игрока и поля
         showPole();
         System.out.print("Наберите число, куда вы хотите вставить " + (1 == PlayerNumber ? "крестик" : "нолик") + ": ");
-
+/**
+ * Проверка некорректного ввода от игрока
+ */
         if (scanner.hasNextInt()) {
           number = scanner.nextInt() - 1;
           if (isValidInput(number)) {
@@ -31,7 +51,7 @@ public class GameXO {
         }else {
           scanner.next();
         }
-        System.out.println("Неверное число. Введите новое число!");
+        System.out.println("Некорректный ввод. Введите новое число от 1 до 9, которое не было использовано!");
       }
       try {
         putX(number);
@@ -42,10 +62,10 @@ public class GameXO {
   }
 
   /**
-   * Проверяем корректность ввода. Введенное число должно быть по размеру поля и поле должно быть в
-   * этом месте еще не заполнено
+   * Проверяем корректность ввода. Введенное число должно быть по размеру поля от1 до 9
+   * и поле должно быть в этом месте еще не заполнено
    */
-  private static boolean isValidInput(int iIn) {
+  static boolean isValidInput(int iIn) {
     if (iIn >= FieldSizeInLengthAndWidth * FieldSizeInLengthAndWidth|| iIn < 0)
       return false;
 
@@ -58,9 +78,9 @@ public class GameXO {
   }
 
   /**
-   * Функция задает номер следующего игрока
+   * Смена текущего игрока
    */
-  private static void nextPlayer() {
+  static void nextPlayer() {
     PlayerNumber = (byte) (1 == PlayerNumber ? 2 : 1);
   }
 
@@ -68,7 +88,7 @@ public class GameXO {
    * Определяем, наступил конец игры или нет Условия: 1) Победили крестики 2) Победили нолики 3)
    * Кончились ходы
    */
-  private static boolean isGameEnd() {
+  static boolean isGameEnd() {
     int i, j;
     boolean bRowWin = false, bColWin = false;
 
@@ -108,7 +128,7 @@ public class GameXO {
       }
     }
     if (FieldSizeInLengthAndWidth * FieldSizeInLengthAndWidth <= i) {
-      System.out.println("Игра окончена,все ходы испольхованы. Ничья");
+      System.out.println("Игра окончена,все ходы использованы. Ничья");
       return true;
     }
     return false;
@@ -136,7 +156,7 @@ public class GameXO {
   }
 
   /**
-   * Вывести игровое поле
+   * Вывод игрового поля
    */
   private static void showPole() {
 
@@ -148,4 +168,12 @@ public class GameXO {
       System.out.println();
     }
   }
+
+  public int getPlayerNumber() {
+    return 0;
+  }
+
+  public void setFieldState(String[] strings) {
+  }
 }
+

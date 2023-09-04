@@ -2,23 +2,35 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * Меню команд для игры Крестики Нолики
+ */
 public enum MenuCommand {
-
+  /**
+   * Определение элементов меню
+   */
   READ(1, "Правила и история игры"),
   START(2, "Старт игры"),
   EXIT(3, "Выйти из игры"),
   UNEXPECTED(0, "");
 
+  /**
+   * Номер пункта меню
+   */
+  public final int num;
+  final String string;
 
-  private final int num;
-  private final String string;
-
+  /**
+   * Конструктор для инициализации элемента меню
+   */
   MenuCommand(int num, String string) {
     this.num = num;
     this.string = string;
   }
 
-
+  /**
+   * Метод для вывода главного меню игры
+   */
   public static void menu() {
     System.out.println();
     System.out.println(" ═-═-═-═-═-═ Добро пожаловать в Игру Крестики Нолики ═-═-═-═-═-═ ");
@@ -31,6 +43,9 @@ public enum MenuCommand {
     }
   }
 
+  /**
+   * Метод для обработки выбора пункта меню
+   */
   public static MenuCommand commandList() throws FileNotFoundException {
 
     Scanner scanner = new Scanner(System.in);
@@ -73,13 +88,17 @@ public enum MenuCommand {
             selectedCommand = EXIT;
             isRun = false;
             break;
-
+/**
+ * Если введенная команда не соответствует ни одному из случаев, выбирается команда UNEXPECTED.
+ */
           default:
             selectedCommand = UNEXPECTED;
             break;
 
         }
-
+/**
+ * Если ввод пользователя не является целым числом, программа выводит сообщение об ошибке.
+ */
       } else {
         System.err.println("Некорректный выбор. Введите корректное значение.\n");
         scanner.nextLine();
